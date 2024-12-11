@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved UI - Callbacks and Promises</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        
+
+        .section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+        }
+
+        .instructions {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    
+
+    <div class="section">
+        <h2>setTimeout Example</h2>
+        <div class="container">
+            <div id="r1" class="box">Level 1</div>
+            <div id="r2" class="box">Level 2</div>
+            <div id="r3" class="box">Level 3</div>
+        </div>
+        <div class="instructions">Colors will change sequentially with delays using setTimeout.</div>
+    </div>
+
+    <div class="section">
+        <h2>setInterval Example</h2>
+        <div class="container">
+            <div id="i1" class="box">Interval 1</div>
+            <div id="i2" class="box">Interval 2</div>
+            <div id="i3" class="box">Interval 3</div>
+        </div>
+        <div class="instructions">Colors will change repeatedly with intervals using setInterval.</div>
+    </div>
+
+    <script>
+        let i1 = document.getElementById("i1");
+        let i2 = document.getElementById("i2");
+        let i3 = document.getElementById("i3");
+        let r1 = document.getElementById("r1");
+        let r2 = document.getElementById("r2");
+        let r3 = document.getElementById("r3");
+
+        function ran() {
+            return Math.floor(Math.random() * 256);
+        }
+
+        function c1(callback) {
+            setTimeout(() => {
+                r1.style.backgroundColor = `rgb(${ran()}, ${ran()}, ${ran()})`;
+                callback();
+            }, 1000);
+        }
+
+        function c2(callback) {
+            setTimeout(() => {
+                r2.style.backgroundColor = `rgb(${ran()}, ${ran()}, ${ran()})`;
+                callback();
+            }, 2000);
+        }
+
+        function c3() {
+            setTimeout(() => {
+                r3.style.backgroundColor = `rgb(${ran()}, ${ran()}, ${ran()})`;
+            }, 3000);
+        }
+
+        function b1(callback) {
+            setInterval(() => {
+                i1.style.backgroundColor = `rgb(${ran()}, ${ran()}, ${ran()})`;
+                callback();
+            }, 1000);
+        }
+
+        function b2(callback) {
+            setInterval(() => {
+                i2.style.backgroundColor = `rgb(${ran()}, ${ran()}, ${ran()})`;
+                callback();
+            }, 2000);
+        }
+
+        function b3() {
+            setInterval(() => {
+                i3.style.backgroundColor = `rgb(${ran()}, ${ran()}, ${ran()})`;
+            }, 3000);
+        }
+
+        c1(() => {
+            c2(() => {
+                c3();
+            });
+        });
+
+        b1(() => {
+            b2(() => {
+                b3();
+            });
+        });
+    </script>
+
+</body>
+</html>
